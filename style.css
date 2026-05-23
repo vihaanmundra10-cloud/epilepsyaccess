@@ -490,17 +490,22 @@ img {
    TEAM PAGE LAYOUT
 ========================= */
 
+/* =========================
+   TEAM PAGE LAYOUT (FIXED PHOTO)
+========================= */
+
 .team-layout {
 
     display: grid;
 
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 360px 1fr;
 
     align-items: center;
 
-    gap: 48px;
+    gap: 60px;
 }
 
+/* LEFT IMAGE COLUMN */
 .team-image-container {
 
     display: flex;
@@ -508,53 +513,107 @@ img {
     align-items: center;
 }
 
+/* IMAGE FRAME (this is what fixes sizing + aesthetics) */
 .team-image-card {
 
     width: 100%;
+    max-width: 320px;
 
-    max-width: 280px;
+    padding: 14px;
 
-    padding: 12px;
+    border-radius: 32px;
 
-    border-radius: 28px;
+    background: rgba(255,255,255,0.9);
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,0.95),
-            rgba(248,248,255,0.9)
-        );
-
-    border:
-        1px solid #eef0ff;
+    border: 1px solid rgba(238,240,255,0.9);
 
     box-shadow:
-        0 24px 50px rgba(15,23,42,0.08);
+        0 30px 70px rgba(15,23,42,0.12);
 
-    transform: rotate(-2deg);
+    transform: rotate(-1.5deg);
 
-    transition:
-        transform 0.25s ease;
+    transition: 0.25s ease;
+
+    backdrop-filter: blur(16px);
 }
 
 .team-image-card:hover {
 
-    transform:
-        rotate(0deg)
-        translateY(-6px);
+    transform: rotate(0deg) translateY(-6px);
 }
 
+/* THE ACTUAL IMAGE */
 .team-photo {
 
     width: 100%;
 
-    height: 360px;
+    aspect-ratio: 3 / 4;   /* KEY FIX: prevents stretching */
+    height: auto;
 
     object-fit: cover;
-
     object-position: center top;
 
-    border-radius: 20px;
+    border-radius: 22px;
+
+    display: block;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,0.18);
+}
+
+/* RIGHT SIDE TEXT */
+.team-info h3 {
+
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 12px;
+}
+
+.founder-label {
+
+    color: #4f46e5 !important;
+    font-weight: 700 !important;
+    margin-bottom: 18px !important;
+}
+
+.team-info p {
+
+    color: #475569;
+    line-height: 1.9;
+    margin-bottom: 16px;
+}
+
+/* =========================
+   RESPONSIVE FIX
+========================= */
+
+@media (max-width: 1000px) {
+
+    .team-layout {
+
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .team-image-card {
+
+        transform: none;
+        max-width: 360px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .team-info h3 {
+
+        font-size: 2.2rem;
+    }
+
+    .team-image-card {
+
+        max-width: 280px;
+    }
 }
 
 .team-info h3 {
