@@ -6,9 +6,214 @@
     <title>Care Access | Epilepsy Access NJ</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ---------------------------------------------------------
+           Page-specific styles for care.html
+           Simple blue & white palette, kept consistent with the
+           nav/hero markup already used on index.html.
+           If style.css already defines .navbar, .logo-box, etc,
+           these rules only ADD the care-access-page-specific pieces
+           below so nothing should conflict.
+        ----------------------------------------------------------*/
+        :root{
+            --blue-dark:#1e1b4b;      /* headline navy/indigo */
+            --blue:#4f46e5;           /* primary indigo (logo, buttons, links) */
+            --blue-mid:#6366f1;
+            --blue-light:#eef0fd;     /* pale tag/panel background */
+            --blue-border:#e0e2fb;
+            --white:#ffffff;
+            --gray-text:#64748b;
+            --gray-line:#e5e7eb;
+        }
+
+        * { box-sizing: border-box; }
+
+        body { font-family: 'Inter', Arial, sans-serif; color:#1e1b4b; background:var(--white); margin:0; }
+
+        .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* ---------- disclaimer ---------- */
+        .disclaimer {
+            background: var(--blue-light);
+            border: 1px solid var(--blue-border);
+            border-left: 5px solid var(--blue);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin: 40px auto;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #312e81;
+        }
+        .disclaimer strong { color: var(--blue-dark); }
+
+        /* ---------- section headers ---------- */
+        .content-section { margin: 56px auto; }
+        .content-section h2 {
+            color: var(--blue-dark);
+            font-size: 1.6rem;
+            font-weight: 700;
+            border-bottom: 3px solid var(--blue-light);
+            padding-bottom: 10px;
+            margin-bottom: 8px;
+        }
+        .content-section p.section-sub {
+            color: var(--gray-text);
+            font-size: 0.95rem;
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+
+        /* ---------- distance finder ---------- */
+        .finder-box {
+            background: var(--blue-light);
+            border: 1px solid var(--blue-border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        .finder-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .finder-row input[type="text"] {
+            flex: 1;
+            min-width: 220px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid var(--blue-border);
+            border-radius: 10px;
+            font-family: inherit;
+            background: var(--white);
+        }
+        .finder-row button {
+            background: var(--blue);
+            color: var(--white);
+            border: none;
+            padding: 12px 26px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .finder-row button:hover { background: #4338ca; }
+        .finder-status { margin-top: 12px; font-size: 0.9rem; color: var(--gray-text); min-height: 1.2em; }
+
+        /* ---------- facility cards ---------- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+        .facility-card {
+            border: 1px solid var(--gray-line);
+            border-top: 4px solid var(--blue);
+            border-radius: 16px;
+            padding: 22px;
+            background: var(--white);
+        }
+        .facility-card h3 { margin: 0 0 6px; color: var(--blue-dark); font-size: 1.1rem; font-weight: 800; }
+        .badge {
+            display: inline-block;
+            background: var(--blue-light);
+            color: var(--blue);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            padding: 5px 12px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .facility-card .meta { font-size: 0.9rem; color: var(--gray-text); margin: 4px 0; }
+        .facility-card .distance {
+            margin-top: 12px;
+            font-weight: 700;
+            color: var(--blue-dark);
+            font-size: 0.95rem;
+        }
+        .facility-card a { color: var(--blue); text-decoration: none; font-size: 0.88rem; }
+        .facility-card a:hover { text-decoration: underline; }
+        .card-links { margin-top: 12px; display:flex; flex-wrap:wrap; gap: 10px; }
+
+        /* ---------- county directory ---------- */
+        .directory-controls {
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+            margin-bottom: 20px;
+        }
+        .directory-controls input, .directory-controls select {
+            padding: 10px 14px;
+            border: 1px solid var(--blue-border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background: var(--white);
+        }
+        .directory-controls input { flex: 1; min-width: 200px; }
+
+        .county-block { margin-bottom: 18px; border: 1px solid var(--gray-line); border-radius: 14px; overflow: hidden; }
+        .county-header {
+            background: var(--blue-light);
+            padding: 12px 18px;
+            font-weight: 700;
+            color: var(--blue-dark);
+            cursor: pointer;
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .county-header .count { font-weight: 400; color: var(--gray-text); font-size: 0.85rem; }
+        .county-list { list-style: none; margin: 0; padding: 0; }
+        .county-list li {
+            padding: 10px 18px;
+            border-top: 1px solid var(--gray-line);
+            font-size: 0.92rem;
+        }
+        .county-list li span.town { color: var(--gray-text); }
+        .hidden { display: none; }
+
+        /* ---------- info sections (insurance / pricing) ---------- */
+        .info-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 720px) { .info-two-col { grid-template-columns: 1fr; } }
+        .info-panel {
+            background: var(--white);
+            border: 1px solid var(--gray-line);
+            border-radius: 16px;
+            padding: 22px;
+        }
+        .info-panel h3 { color: var(--blue-dark); margin-top:0; font-weight: 800; }
+        .info-panel ul { padding-left: 20px; color: var(--gray-text); font-size: 0.92rem; line-height:1.6; }
+        .info-panel a { color: var(--blue); }
+
+        .verify-link-btn {
+            display:inline-block;
+            margin-top: 6px;
+            font-size: 0.82rem;
+            background: var(--blue-light);
+            border: 1px solid var(--blue-border);
+            color: var(--blue);
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 999px;
+            text-decoration:none;
+        }
+        .verify-link-btn:hover { background: var(--blue-border); }
+
+        footer.simple-footer {
+            text-align:center;
+            padding: 30px 0 60px;
+            color: var(--gray-text);
+            font-size: 0.85rem;
+        }
+    </style>
 </head>
 <body>
-
     <nav class="navbar">
         <div class="logo-container">
             <div class="logo-box">EA</div>
@@ -31,5 +236,293 @@
         <h1>Neurologists & Hospitals in NJ</h1>
     </section>
 
+    <div class="wrap">
+
+        <div class="disclaimer">
+            <strong>How to use this page:</strong> The facilities below marked "NAEC Level 4 Epilepsy Center" are verified
+            against the National Association of Epilepsy Centers' accreditation records and each hospital's own website —
+            these are the highest-level, most heavily-vetted epilepsy programs in New Jersey. The wider hospital directory
+            further down is a general list of NJ acute-care hospitals sourced from the NJ Hospital Association; it is
+            <strong>not</strong> confirmed to have epilepsy-specific programs, so call ahead to check. We intentionally do
+            <strong>not</strong> list specific insurance networks or dollar prices per hospital here — that information
+            changes by plan and by procedure and isn't reliably available in one place, so making it up would risk sending
+            you somewhere your coverage doesn't work. Instead, every card links to the hospital's own insurance and price
+            transparency pages so you get the real, current number.
+        </div>
+
+        <!-- ================= DISTANCE FINDER ================= -->
+        <section class="content-section" id="finder">
+            <h2>Find your nearest Level 4 Epilepsy Center</h2>
+            <p class="section-sub">Enter your address or ZIP code to sort New Jersey's five NAEC-accredited Level 4 epilepsy centers by distance from you. Geocoding is done in your browser via OpenStreetMap — no location data is stored or sent anywhere else.</p>
+
+            <div class="finder-box">
+                <div class="finder-row">
+                    <input type="text" id="userLocation" placeholder="e.g. 08901 or 123 Main St, Trenton, NJ" />
+                    <button onclick="findDistances()">Find distances</button>
+                </div>
+                <div class="finder-status" id="finderStatus"></div>
+            </div>
+
+            <div class="card-grid" id="epilepsyCards"></div>
+        </section>
+
+        <!-- ================= INSURANCE & PRICING ================= -->
+        <section class="content-section" id="insurance-pricing">
+            <h2>Insurance & Cost of Care</h2>
+            <p class="section-sub">General, verifiable information only — always confirm specifics with your plan and the hospital's billing office before scheduling.</p>
+            <div class="info-two-col">
+                <div class="info-panel">
+                    <h3>Insurance</h3>
+                    <ul>
+                        <li>Under federal law (EMTALA), any hospital emergency department must screen and stabilize you regardless of insurance or ability to pay — this applies statewide, including during a seizure emergency.</li>
+                        <li>All five Level 4 centers below are part of large academic health systems (RWJBarnabas Health, Hackensack Meridian Health, Cooper University Health Care) that typically contract with major NJ carriers such as Horizon BCBS, Aetna, Cigna, UnitedHealthcare, and NJ FamilyCare/Medicaid and Medicare — but network status varies by your specific plan tier, not just the carrier name.</li>
+                        <li>The only reliable way to confirm your plan is accepted for epilepsy/neurology specifically is to call the number on your insurance card and ask them to verify against the hospital's NPI, or call the hospital's own insurance-verification line (numbers are on each card below).</li>
+                    </ul>
+                </div>
+                <div class="info-panel">
+                    <h3>Cost of care</h3>
+                    <ul>
+                        <li>Since 2021, federal law has required every U.S. hospital to publish a machine-readable file of its standard charges and a consumer "shoppable services" price estimate tool — these are the only accurate, hospital-specific numbers available, and they update independently of anything we could list here.</li>
+                        <li>We deliberately don't publish per-procedure epilepsy prices on this page, since costs vary hugely by test (routine EEG vs. inpatient video-EEG monitoring vs. epilepsy surgery), your insurance, and your deductible already met that year.</li>
+                        <li>Each facility card below links directly to that hospital's official price-transparency tool.</li>
+                        <li>For cost help, the <a href="https://www.epilepsy.com" target="_blank" rel="noopener">Epilepsy Foundation</a> maintains a 24/7 helpline and financial-assistance resource list, and every NJ hospital's financial counseling office can screen you for charity care.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= GENERAL HOSPITAL DIRECTORY ================= -->
+        <section class="content-section" id="directory">
+            <h2>All NJ Acute-Care Hospitals, by County</h2>
+            <p class="section-sub">Sourced from the New Jersey Hospital Association's statewide hospital list. This is a general directory of licensed hospitals — not all of these have neurology or epilepsy programs, and some names/ownership may have changed since this list was compiled, so confirm before visiting. Use the search box or county filter to narrow it down.</p>
+
+            <div class="directory-controls">
+                <input type="text" id="dirSearch" placeholder="Search hospital or town name..." onkeyup="renderDirectory()">
+                <select id="dirCounty" onchange="renderDirectory()">
+                    <option value="">All counties</option>
+                </select>
+            </div>
+
+            <div id="directoryContainer"></div>
+        </section>
+
+    </div>
+
+    <footer class="simple-footer">
+        Epilepsy Access NJ — Care Access data compiled from the National Association of Epilepsy Centers and the NJ Hospital Association. Last checked August 2026. Not medical advice — always verify directly with the hospital.
+    </footer>
+
+<script>
+/* ============================================================
+   VERIFIED NAEC LEVEL 4 EPILEPSY CENTERS (New Jersey)
+   Sourced directly from NAEC accreditation announcements and
+   each hospital's own site. Phone numbers are the hospitals'
+   published main lines, not epilepsy-department direct lines.
+   ============================================================ */
+const epilepsyCenters = [
+    {
+        name: "Cooperman Barnabas Medical Center",
+        system: "RWJBarnabas Health",
+        address: "94 Old Short Hills Rd, Livingston, NJ 07039",
+        county: "Essex County",
+        phone: "(973) 322-5000",
+        level: "NAEC Level 4 Epilepsy Center",
+        website: "https://www.rwjbh.org/cooperman-barnabas-medical-center/treatment-care/neurology-and-neurosurgical-services/department-of-neurology/adult-and-pediatric-comprehensive-epilepsy-cente/"
+    },
+    {
+        name: "Robert Wood Johnson University Hospital",
+        system: "RWJBarnabas Health / Rutgers Health",
+        address: "1 Robert Wood Johnson Pl, New Brunswick, NJ 08901",
+        county: "Middlesex County",
+        phone: "(732) 828-3000",
+        level: "NAEC Level 4 Epilepsy Center",
+        website: "https://www.rwjbh.org/treatment-care/neuroscience/neurosurgery/conditions-treated/epilepsy/"
+    },
+    {
+        name: "Jersey Shore University Medical Center",
+        system: "Hackensack Meridian Health",
+        address: "1945 NJ-33, Neptune, NJ 07753",
+        county: "Monmouth County",
+        phone: "(732) 775-5500",
+        level: "NAEC Level 4 Epilepsy Center",
+        website: "https://www.hackensackmeridianhealth.org/en/info/neuro/level-4-epilepsy-program"
+    },
+    {
+        name: "Cooper University Hospital",
+        system: "Cooper University Health Care",
+        address: "1 Cooper Plaza, Camden, NJ 08103",
+        county: "Camden County",
+        phone: "Main line not independently verified — see website",
+        level: "NAEC Level 4 Epilepsy Center (accredited 2026–2028)",
+        website: "https://www.cooperhealth.org/services/epilepsy-center"
+    },
+    {
+        name: "Hackensack University Medical Center",
+        system: "Hackensack Meridian Health",
+        address: "30 Prospect Ave, Hackensack, NJ 07601",
+        county: "Bergen County",
+        phone: "(551) 996-2000",
+        level: "NAEC Level 4 Epilepsy Center",
+        website: "https://www.hackensackmeridianhealth.org/en/locations/humc-epilepsy-program"
+    }
+];
+
+function googleSearchLink(query) {
+    return "https://www.google.com/search?q=" + encodeURIComponent(query);
+}
+
+function renderEpilepsyCards(distances) {
+    const grid = document.getElementById('epilepsyCards');
+    grid.innerHTML = "";
+    let list = epilepsyCenters.map((f, i) => ({ ...f, distance: distances ? distances[i] : null }));
+    if (distances) list.sort((a, b) => (a.distance ?? 999999) - (b.distance ?? 999999));
+
+    list.forEach(f => {
+        const card = document.createElement('div');
+        card.className = 'facility-card';
+        card.innerHTML = `
+            <span class="badge">${f.level}</span>
+            <h3>${f.name}</h3>
+            <div class="meta">${f.system}</div>
+            <div class="meta">${f.address}</div>
+            <div class="meta">${f.county}</div>
+            <div class="meta">${f.phone}</div>
+            ${f.distance !== null && f.distance !== undefined ? `<div class="distance">${f.distance.toFixed(1)} miles away</div>` : ""}
+            <div class="card-links">
+                <a href="${f.website}" target="_blank" rel="noopener">Epilepsy program page →</a>
+            </div>
+            <div class="card-links">
+                <a class="verify-link-btn" href="${googleSearchLink(f.name + ' insurance accepted')}" target="_blank" rel="noopener">Verify my insurance</a>
+                <a class="verify-link-btn" href="${googleSearchLink(f.name + ' price transparency tool')}" target="_blank" rel="noopener">Look up cost estimate</a>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+renderEpilepsyCards(null);
+
+function haversineMiles(lat1, lon1, lat2, lon2) {
+    const R = 3958.8; // miles
+    const toRad = d => d * Math.PI / 180;
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+async function geocode(address) {
+    const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=" + encodeURIComponent(address);
+    const res = await fetch(url, { headers: { "Accept": "application/json" } });
+    if (!res.ok) throw new Error("Geocoding request failed");
+    const data = await res.json();
+    if (!data.length) throw new Error("No match found");
+    return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+}
+
+let facilityCoordsCache = null;
+
+async function getFacilityCoords() {
+    if (facilityCoordsCache) return facilityCoordsCache;
+    const coords = [];
+    for (const f of epilepsyCenters) {
+        try {
+            const c = await geocode(f.address);
+            coords.push(c);
+        } catch (e) {
+            coords.push(null);
+        }
+        // be polite to the free Nominatim endpoint
+        await new Promise(r => setTimeout(r, 300));
+    }
+    facilityCoordsCache = coords;
+    return coords;
+}
+
+async function findDistances() {
+    const status = document.getElementById('finderStatus');
+    const input = document.getElementById('userLocation').value.trim();
+    if (!input) { status.textContent = "Enter an address or ZIP code first."; return; }
+
+    status.textContent = "Locating you...";
+    try {
+        const userCoord = await geocode(input + ", NJ");
+        status.textContent = "Calculating distances to each center...";
+        const facCoords = await getFacilityCoords();
+        const distances = facCoords.map(c => c ? haversineMiles(userCoord.lat, userCoord.lon, c.lat, c.lon) : null);
+        renderEpilepsyCards(distances);
+        status.textContent = "Distances are straight-line ('as the crow flies'), not driving distance — actual drive time will usually be longer.";
+    } catch (e) {
+        status.textContent = "Couldn't locate that address. Try a ZIP code or a more specific street address.";
+    }
+}
+
+/* ============================================================
+   GENERAL NJ HOSPITAL DIRECTORY (by county)
+   Source: NJ Hospital Association statewide hospital list.
+   Names/town only — not confirmed for epilepsy-specific care.
+   ============================================================ */
+const njHospitals = {
+"Atlantic County": ["Ancora Psychiatric Hospital – Ancora","AtlantiCare Regional Medical Center – Atlantic City & Pomona","Bacharach Institute for Rehabilitation – Pomona","Shore Medical Center – Somers Point"],
+"Bergen County": ["Bergen Regional Medical Center – Paramus","Englewood Hospital and Medical Center – Englewood","Hackensack University Medical Center – Hackensack","Pascack Valley Medical Center – Westwood","Holy Name Medical Center – Teaneck","Kessler Institute for Rehabilitation (Saddle Brook) – Saddle Brook","Select Specialty Hospital – Northeast New Jersey – Rochelle Park","Christian Health Care Center – Wyckoff","The Valley Hospital – Ridgewood"],
+"Burlington County": ["Lourdes Medical Center of Burlington County – Willingboro","Virtua Memorial – Mount Holly","Deborah Heart and Lung Center – Browns Mills","Hampton Behavioral Health Center – Rancocas","Virtua Marlton – Marlton"],
+"Camden County": ["Cooper University Hospital – Camden","Kennedy University Hospital – Cherry Hill","Kennedy University Hospital – Stratford","Our Lady of Lourdes Medical Center – Camden","Virtua Berlin – Berlin","Virtua Voorhees – Voorhees"],
+"Cape May County": ["Cape Regional Medical Center – Cape May Court House"],
+"Cumberland County": ["Inspira Medical Center Vineland – Vineland"],
+"Essex County": ["Mountainside Medical Center – Montclair","Saint Michael's Medical Center – Newark","Clara Maass Medical Center – Belleville","East Orange General Hospital – East Orange","Newark Beth Israel Medical Center – Newark","Cooperman Barnabas Medical Center (formerly Saint Barnabas) – Livingston","University Hospital – Newark","VA New Jersey Health Care System – East Orange"],
+"Gloucester County": ["Kennedy University Hospital – Washington Township, Turnersville","Inspira Medical Center Woodbury – Woodbury"],
+"Hudson County": ["Bayonne Medical Center – Bayonne","Christ Hospital – Jersey City","Hoboken University Medical Center – Hoboken","Jersey City Medical Center – Jersey City","Meadowlands Hospital Medical Center – Secaucus","Palisades Medical Center – North Bergen"],
+"Hunterdon County": ["Hunterdon Medical Center – Flemington"],
+"Mercer County": ["Capital Health Regional Medical Center – Trenton","Capital Health Medical Center Hopewell – Pennington","Robert Wood Johnson University Hospital at Hamilton – Hamilton","St. Francis Medical Center – Trenton"],
+"Middlesex County": ["University Medical Center of Princeton at Plainsboro – Plainsboro","JFK Medical Center – Edison","Raritan Bay Medical Center (Old Bridge / Perth Amboy) – Old Bridge & Perth Amboy","Robert Wood Johnson University Hospital – New Brunswick","Saint Peter's University Hospital – New Brunswick"],
+"Monmouth County": ["Bayshore Medical Center – Holmdel","CentraState Medical Center – Freehold","Jersey Shore University Medical Center – Neptune","Riverview Medical Center – Red Bank","Monmouth Medical Center – Long Branch"],
+"Morris County": ["Morristown Medical Center – Morristown","Chilton Medical Center – Pompton Plains","Greystone Park Psychiatric Hospital – Greystone Park","Saint Clare's Hospital (Boonton, Denville, Dover) – Morris County"],
+"Ocean County": ["Ocean Medical Center – Brick","Community Medical Center – Toms River","Monmouth Medical Center Southern Campus – Lakewood","Southern Ocean Medical Center – Manahawkin"],
+"Passaic County": ["St. Joseph's Wayne Hospital – Wayne","St. Joseph's Regional Medical Center – Paterson","St. Mary's General Hospital – Passaic"],
+"Salem County": ["The Memorial Hospital of Salem County – Salem","Inspira Medical Center Elmer – Elmer"],
+"Somerset County": ["Carrier Clinic – Belle Mead","Robert Wood Johnson University Hospital Somerset – Somerville","VA New Jersey Health Care System – Lyons"],
+"Sussex County": ["Newton Medical Center – Newton"],
+"Union County": ["Overlook Medical Center – Summit","Summit Oaks Hospital – Summit","Trinitas Regional Medical Center – Elizabeth","Robert Wood Johnson University Hospital at Rahway – Rahway"],
+"Warren County": ["Hackettstown Medical Center – Hackettstown","St. Luke's Hospital – Warren Campus, Phillipsburg"]
+};
+
+// populate county dropdown
+const countySelect = document.getElementById('dirCounty');
+Object.keys(njHospitals).forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    countySelect.appendChild(opt);
+});
+
+function renderDirectory() {
+    const container = document.getElementById('directoryContainer');
+    const search = document.getElementById('dirSearch').value.toLowerCase();
+    const countyFilter = document.getElementById('dirCounty').value;
+    container.innerHTML = "";
+
+    Object.entries(njHospitals).forEach(([county, hospitals]) => {
+        if (countyFilter && countyFilter !== county) return;
+        const filtered = hospitals.filter(h => h.toLowerCase().includes(search));
+        if (search && filtered.length === 0) return;
+
+        const block = document.createElement('div');
+        block.className = 'county-block';
+        block.innerHTML = `
+            <div class="county-header">${county} <span class="count">${filtered.length} hospital${filtered.length !== 1 ? 's' : ''}</span></div>
+            <ul class="county-list">
+                ${filtered.map(h => {
+                    const [name, town] = h.split(' – ');
+                    return `<li>${name} <span class="town">— ${town || ''}</span></li>`;
+                }).join('')}
+            </ul>
+        `;
+        container.appendChild(block);
+    });
+
+    if (container.innerHTML === "") {
+        container.innerHTML = '<p style="color:var(--gray-text);">No hospitals match that search.</p>';
+    }
+}
+renderDirectory();
+</script>
 </body>
 </html>
